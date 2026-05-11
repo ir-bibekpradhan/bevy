@@ -36,5 +36,6 @@ jobs:
         if: always()
         uses: invisirisk/pse-action@latest
         with:
+          api_url: "http://app.dev.invisirisk.com"
           cleanup: "true"
       # ============= InvisiRisk Cleanup End =============  
