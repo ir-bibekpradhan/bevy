@@ -8,16 +8,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-     # ============= InvisiRisk Setup =============
+      # ============= InvisiRisk Setup =============
       - name: Setup PSE
-        uses: invisirisk/pse-action@develop
+        uses: invisirisk/pse-action@latest
         with:
           api_url: "https://app.dev.invisirisk.com"
-          app_token: ${{secrets.IR_API_KEY}}
+          app_token: ${{ secrets.IR_API_KEY }}
       # ============= InvisiRisk Setup End =============
+
       - uses: actions/checkout@v4
 
       - uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Linux dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            pkg-config \
+            libwayland-dev \
+            libxkbcommon-dev \
+            libudev-dev \
+            libasound2-dev
 
       - name: Build
         run: cargo build --verbose
@@ -31,11 +42,11 @@ jobs:
       - name: Format Check
         run: cargo fmt --check
 
-    # ============= InvisiRisk Cleanup =============
+      # ============= InvisiRisk Cleanup =============
       - name: Cleanup PSE
         if: always()
-        uses: invisirisk/pse-action@develop
+        uses: invisirisk/pse-action@latest
         with:
           api_url: "https://app.dev.invisirisk.com"
           cleanup: "true"
-      # ============= InvisiRisk Cleanup End =============  
+      # ============= InvisiRisk Cleanup End =============
