@@ -14,6 +14,7 @@ jobs:
         with:
           api_url: "https://app.stage.invisirisk.com"
           app_token: ${{ secrets.IR_API_KEY }}
+          pse_image_tag: "dev-test"
       # ============= InvisiRisk Setup End =============
       - uses: actions/checkout@v4
 
